@@ -1,0 +1,495 @@
+:root {
+    /* Deep Purple Theme Colors (Material 3 inspired) */
+    --primary: #6750a4;
+    --on-primary: #ffffff;
+    --primary-container: #eaddff;
+    --on-primary-container: #21005d;
+
+    --secondary: #625b71;
+    --on-secondary: #ffffff;
+    --secondary-container: #e8def8;
+    --on-secondary-container: #1d192b;
+
+    --tertiary: #7d5260;
+    --on-tertiary: #ffffff;
+    --tertiary-container: #ffd8e4;
+    --on-tertiary-container: #31111d;
+
+    --error: #b3261e;
+    --on-error: #ffffff;
+    --error-container: #f9dedc;
+    --on-error-container: #410e0b;
+
+    --background: #fdfcff;
+    /* Surface */
+    --on-background: #1c1b1f;
+
+    --surface: #fdfcff;
+    --on-surface: #1c1b1f;
+
+    --surface-variant: #e7e0ec;
+    --on-surface-variant: #49454f;
+
+    --outline: #79747e;
+
+    /* Custom Status Colors */
+    --success: #4caf50;
+    /* Green */
+    --danger: #f44336;
+    /* Red */
+
+    /* Spacing */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+
+    /* Border Radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 28px;
+    /* Material 3 standard for large containers */
+
+    /* Elevation (Shadows) */
+    --elevation-1: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+    --elevation-2: 0px 2px 6px 2px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+    --elevation-3: 0px 4px 8px 3px rgba(0, 0, 0, 0.15), 0px 1px 3px 0px rgba(0, 0, 0, 0.3);
+
+    /* Transitions */
+    --transition-base: 200ms cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+[data-theme="dark"] {
+    --primary: #d0bcff;
+    --on-primary: #381e72;
+    --primary-container: #4f378b;
+    --on-primary-container: #eaddff;
+
+    --secondary: #ccc2dc;
+    --on-secondary: #332d41;
+    --secondary-container: #4a4458;
+    --on-secondary-container: #e8def8;
+
+    --tertiary: #efb8c8;
+    --on-tertiary: #492532;
+    --tertiary-container: #633b48;
+    --on-tertiary-container: #ffd8e4;
+
+    --error: #f2b8b5;
+    --on-error: #601410;
+    --error-container: #8c1d18;
+    --on-error-container: #f9dedc;
+
+    --background: #1c1b1f;
+    --on-background: #e6e1e5;
+
+    --surface: #1c1b1f;
+    --on-surface: #e6e1e5;
+
+    --surface-variant: #49454f;
+    --on-surface-variant: #cac4d0;
+
+    --outline: #938f99;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', 'Inter', sans-serif;
+    /* Material Design standard */
+    background: var(--background);
+    color: var(--on-background);
+    line-height: 1.5;
+    transition: background var(--transition-base), color var(--transition-base);
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: var(--spacing-md);
+}
+
+/* Header (AppBar style) */
+.header {
+    background: var(--surface-variant);
+    /* Inverse Primary style often uses surface variant or primary container */
+    color: var(--on-surface-variant);
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    /* Rounded bottom only */
+    padding: var(--spacing-md) var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    box-shadow: var(--elevation-2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.app-title {
+    font-size: 1.375rem;
+    /* 22px */
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.header-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+/* Icon Buttons */
+.icon-btn {
+    background: transparent;
+    border: none;
+    color: inherit;
+    padding: var(--spacing-sm);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color var(--transition-base);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+}
+
+.icon-btn:hover {
+    background-color: rgba(var(--on-surface-variant), 0.08);
+    /* State layer */
+}
+
+.icon-btn.loading svg {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Section Titles */
+.section-title {
+    font-size: 1.25rem;
+    /* 20px */
+    font-weight: 500;
+    margin-bottom: var(--spacing-sm);
+    color: var(--on-background);
+}
+
+/* Grids & Layouts */
+.indices-grid {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    align-items: stretch;
+    width: 100%;
+}
+
+.indices-grid .stock-card {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Full-bleed wrapper for sections that should span the viewport */
+.full-bleed {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    box-sizing: border-box;
+}
+
+.full-bleed .indices-section {
+    /* Remove internal padding so the indices grid can touch viewport edges */
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Ensure the grid itself doesn't add extra outer padding so cards reach edges */
+.indices-grid {
+    padding: 0;
+}
+
+@media (max-width: 600px) {
+    .full-bleed .indices-section {
+        padding-left: var(--spacing-md);
+        padding-right: var(--spacing-md);
+    }
+
+    .indices-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-sm);
+    }
+}
+
+.portfolio-section {
+    margin-bottom: var(--spacing-lg);
+}
+
+.portfolio-card {
+    background: var(--secondary-container);
+    color: var(--on-secondary-container);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    text-align: center;
+    box-shadow: var(--elevation-1);
+}
+
+.portfolio-value {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: var(--spacing-sm) 0;
+}
+
+.portfolio-gain {
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.watchlist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    /* Responsive grid */
+    gap: var(--spacing-md);
+}
+
+/* Stock Card */
+.stock-card {
+    background: var(--surface);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    box-shadow: var(--elevation-1);
+    transition: box-shadow var(--transition-base);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    position: relative;
+    border: 1px solid var(--outline);
+    /* Subtle border */
+    border-color: rgba(121, 116, 126, 0.2);
+    /* Very light outline */
+}
+
+.stock-card:hover {
+    box-shadow: var(--elevation-2);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--spacing-sm);
+}
+
+.stock-name {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.2;
+    margin-bottom: 4px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.stock-code {
+    font-size: 0.75rem;
+    color: var(--outline);
+}
+
+.stock-actions {
+    display: flex;
+    gap: 4px;
+}
+
+.action-btn {
+    background: transparent;
+    border: none;
+    color: var(--outline);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 50%;
+    transition: color var(--transition-base), background-color var(--transition-base);
+}
+
+.action-btn:hover {
+    color: var(--error);
+    background-color: var(--error-container);
+}
+
+.card-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: auto;
+    /* Push to bottom */
+}
+
+.price-info {
+    /* Left side */
+}
+
+.current-price {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--on-surface);
+}
+
+.change-info {
+    text-align: right;
+    font-size: 0.75rem;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+/* Text Colors for Gain/Loss */
+.text-success {
+    color: var(--success);
+}
+
+.text-danger {
+    color: var(--danger);
+}
+
+.text-neutral {
+    color: var(--outline);
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: var(--surface);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    width: 90%;
+    max-width: 400px;
+    box-shadow: var(--elevation-3);
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-md);
+    color: var(--on-surface);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.input-field {
+    width: 100%;
+    padding: var(--spacing-md);
+    border: 1px solid var(--outline);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--on-surface);
+    font-size: 1rem;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-lg);
+}
+
+.btn {
+    padding: 10px 24px;
+    border-radius: 100px;
+    /* Stadium shape */
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    transition: box-shadow var(--transition-base);
+}
+
+.btn-text {
+    background: transparent;
+    color: var(--primary);
+}
+
+.btn-text:hover {
+    background: rgba(103, 80, 164, 0.08);
+}
+
+.btn-filled {
+    background: var(--primary);
+    color: var(--on-primary);
+}
+
+.btn-filled:hover {
+    box-shadow: var(--elevation-1);
+}
+
+/* Toast */
+.toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--on-surface);
+    color: var(--surface);
+    /* Inverse colors for toast */
+    padding: 14px 24px;
+    border-radius: 4px;
+    box-shadow: var(--elevation-2);
+    transition: transform 0.3s ease;
+    z-index: 2000;
+    opacity: 0;
+}
+
+.toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .indices-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .watchlist-grid {
+        grid-template-columns: 1fr;
+        /* Single column on mobile */
+    }
+}
