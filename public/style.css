@@ -100,6 +100,11 @@
     box-sizing: border-box;
 }
 
+/* Utility: hide elements by toggling this class from JS */
+.hidden {
+    display: none !important;
+}
+
 body {
     font-family: 'Roboto', 'Inter', sans-serif;
     /* Material Design standard */
