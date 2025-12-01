@@ -121,35 +121,6 @@ body {
     padding: var(--spacing-md);
 }
 
-/* Header (AppBar style) */
-.header {
-    background: var(--surface-variant);
-    /* Inverse Primary style often uses surface variant or primary container */
-    color: var(--on-surface-variant);
-    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
-    /* Rounded bottom only */
-    padding: var(--spacing-md) var(--spacing-lg);
-    margin-bottom: var(--spacing-lg);
-    box-shadow: var(--elevation-2);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.app-title {
-    font-size: 1.375rem;
-    /* 22px */
-    font-weight: 400;
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-}
-
-.header-actions {
-    display: flex;
-    gap: var(--spacing-sm);
-}
-
 /* Icon Buttons */
 .icon-btn {
     background: transparent;
@@ -244,31 +215,51 @@ body {
     }
 }
 
+/* Portfolio Summary */
 .portfolio-section {
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
 }
 
 .portfolio-card {
     background: var(--secondary-container);
     color: var(--on-secondary-container);
     border-radius: var(--radius-md);
-    padding: var(--spacing-lg);
-    text-align: center;
+    padding: var(--spacing-md);
     box-shadow: var(--elevation-1);
+    text-align: left;
+}
+
+/* Left side (3 parts) - Removed */
+/* Right side (1 part) - Removed */
+
+.portfolio-label {
+    font-size: 0.875rem;
+    margin-bottom: 4px;
+    opacity: 0.9;
 }
 
 .portfolio-value {
     font-size: 2rem;
     font-weight: 700;
-    margin: var(--spacing-sm) 0;
+    line-height: 1.2;
 }
 
 .portfolio-gain {
     font-weight: 500;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 4px;
+    gap: 8px;
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+/* Row container to align asset value and gain/loss horizontally */
+.portfolio-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--spacing-lg);
 }
 
 .watchlist-grid {

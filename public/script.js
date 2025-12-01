@@ -195,8 +195,32 @@ async function fetchData() {
 
         const url = `${baseUrl}/?code=${encodeURIComponent(codesParam)}`;
 
-        const response = await fetch(url);
-        if (!response.ok) throw new Error('Network response was not ok');
+        // Retry logic
+        let response;
+        let retries = 3;
+        let attempt = 0;
+
+        while (attempt < retries) {
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
+
+                response = await fetch(url, { signal: controller.signal });
+                clearTimeout(timeoutId);
+
+                if (response.ok) break; // Success, exit loop
+
+                throw new Error(`Server returned ${response.status}`);
+            } catch (err) {
+                attempt++;
+                console.warn(`Fetch attempt ${attempt} failed: ${err.message}`);
+
+                if (attempt >= retries) throw err; // Final failure
+
+                // Wait before retrying (exponential backoff: 1s, 2s, 4s)
+                await new Promise(resolve => setTimeout(resolve, 1000 * Math.pow(2, attempt - 1)));
+            }
+        }
 
         const data = await response.json();
         console.log('API Response:', data);
