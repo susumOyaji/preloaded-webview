@@ -312,13 +312,22 @@ function createCard(item, isIndex) {
         currencySymbol = '¥'; // Japanese stocks
     }
 
-    // Remove existing +/- signs from API data to prevent double signs
-    const change = String(changeRaw).replace(/^[+\-]/, '');
-    const changeRate = String(changeRateRaw).replace(/^[+\-]/, '');
+    // Normalize numeric change values and determine sign/absolute for display
+    const parseNumber = (v) => {
+        if (v === null || v === undefined) return 0;
+        const s = String(v).replace(/,/g, '').trim();
+        const n = parseFloat(s);
+        return Number.isFinite(n) ? n : 0;
+    };
 
-    const isPositive = parseFloat(changeRaw) >= 0;
+    const changeNum = parseNumber(changeRaw);
+    const changeRateNum = parseNumber(changeRateRaw);
+
+    const isPositive = changeNum >= 0;
     const colorClass = isPositive ? 'text-success' : 'text-danger';
-    const prefix = isPositive ? '+' : '';
+    const sign = isPositive ? '+' : '-';
+    const change = Math.abs(changeNum).toLocaleString();
+    const changeRate = Math.abs(changeRateNum).toFixed(2);
 
     const card = document.createElement('div');
     card.className = 'stock-card';
