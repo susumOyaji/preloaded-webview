@@ -89,6 +89,24 @@
 				<p>Click "Add Stock" to get started.</p>
 			</div>
 		</section>
+
+		<!-- JSON Data Display -->
+		<section class="json-section">
+			<div
+				style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-sm);">
+				<h2 class="section-title" style="margin-bottom: 0;">API Response Data</h2>
+				<button id="toggleJsonBtn" class="btn btn-text" style="padding: 8px 16px;">
+					<span id="toggleJsonText">Show</span>
+					<svg id="toggleJsonIcon" xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960"
+						width="20" fill="currentColor" style="transition: transform 0.3s ease;">
+						<path d="M480-345 240-585l56-56 184 184 184-184 56 56-240 240Z" />
+					</svg>
+				</button>
+			</div>
+			<div id="jsonDataContainer" class="json-data-container hidden">
+				<pre id="jsonDataContent" class="json-content">No data loaded yet</pre>
+			</div>
+		</section>
 	</div>
 
 	<!-- Add/Edit Stock Modal -->

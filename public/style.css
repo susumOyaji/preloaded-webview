@@ -314,6 +314,7 @@ body {
     margin-bottom: 4px;
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -349,10 +350,6 @@ body {
     align-items: flex-end;
     margin-top: auto;
     /* Push to bottom */
-}
-
-.price-info {
-    /* Left side */
 }
 
 .current-price {
@@ -485,6 +482,44 @@ body {
 .toast.show {
     transform: translateX(-50%) translateY(0);
     opacity: 1;
+}
+
+/* JSON Data Display Section */
+.json-section {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-lg);
+}
+
+.json-data-container {
+    background: var(--surface);
+    border: 1px solid var(--outline);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    max-height: 500px;
+    overflow-y: auto;
+    transition: max-height 0.3s ease;
+}
+
+.json-data-container.hidden {
+    max-height: 0;
+    border: none;
+}
+
+.json-content {
+    margin: 0;
+    padding: var(--spacing-md);
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--on-surface);
+    background: var(--surface-variant);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-x: auto;
+}
+
+#toggleJsonIcon.rotated {
+    transform: rotate(180deg);
 }
 
 /* Responsive */

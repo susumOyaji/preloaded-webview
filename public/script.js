@@ -14,6 +14,7 @@ let indicesContainer, watchlistContainer, totalAssetValue, totalGainLoss, emptyS
 let addStockModal, modalTitle, stockInput, brokerInput, quantityInput, priceInput, confirmAddBtn, cancelAddBtn, addStockBtn;
 let settingsModal, refreshIntervalInput, themeToggle, saveSettingsBtn, cancelSettingsBtn, settingsBtn;
 let refreshBtn, toast;
+let jsonDataContainer, jsonDataContent, toggleJsonBtn, toggleJsonText, toggleJsonIcon;
 
 // Initialize
 function init() {
@@ -44,6 +45,12 @@ function init() {
 
     refreshBtn = document.getElementById('refreshBtn');
     toast = document.getElementById('toast');
+
+    jsonDataContainer = document.getElementById('jsonDataContainer');
+    jsonDataContent = document.getElementById('jsonDataContent');
+    toggleJsonBtn = document.getElementById('toggleJsonBtn');
+    toggleJsonText = document.getElementById('toggleJsonText');
+    toggleJsonIcon = document.getElementById('toggleJsonIcon');
 
     loadSettings();
 
@@ -99,6 +106,22 @@ function setupEventListeners() {
 
     // Refresh
     if (refreshBtn) refreshBtn.addEventListener('click', fetchData);
+
+    // JSON Toggle
+    if (toggleJsonBtn) {
+        toggleJsonBtn.addEventListener('click', () => {
+            const isHidden = jsonDataContainer.classList.contains('hidden');
+            if (isHidden) {
+                jsonDataContainer.classList.remove('hidden');
+                toggleJsonText.textContent = 'Hide';
+                toggleJsonIcon.classList.add('rotated');
+            } else {
+                jsonDataContainer.classList.add('hidden');
+                toggleJsonText.textContent = 'Show';
+                toggleJsonIcon.classList.remove('rotated');
+            }
+        });
+    }
 
     // Close modals on backdrop click
     window.addEventListener('click', (e) => {
@@ -177,6 +200,11 @@ async function fetchData() {
 
         const data = await response.json();
         console.log('API Response:', data);
+
+        // Display JSON data
+        if (jsonDataContent) {
+            jsonDataContent.textContent = JSON.stringify(data, null, 2);
+        }
 
         // Split data
         const indicesData = data.filter(item => {
