@@ -405,8 +405,8 @@ function createCard(item, isIndex) {
             <div style="display:flex; justify-content:space-between; align-items:flex-end;">
                 <div class="current-price">${currencySymbol}${priceStr}</div>
                 <div class="change-info">
-                    <span class="${colorClass}">${prefix}${change}</span>
-                    <span class="${colorClass}">(${prefix}${changeRate}%)</span>
+                    <span class="${colorClass}">${sign}${change}</span>
+                    <span class="${colorClass}">(${sign}${changeRate}%)</span>
                 </div>
             </div>
             ${portfolioHtml}
