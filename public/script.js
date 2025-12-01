@@ -12,7 +12,7 @@ let editingId = null; // Track which stock is being edited (code + broker)
 // DOM Elements
 let indicesContainer, watchlistContainer, totalAssetValue, totalGainLoss, emptyState;
 let addStockModal, modalTitle, stockInput, brokerInput, quantityInput, priceInput, confirmAddBtn, cancelAddBtn, addStockBtn;
-let settingsModal, apiEndpointInput, refreshIntervalInput, themeToggle, saveSettingsBtn, cancelSettingsBtn, settingsBtn;
+let settingsModal, refreshIntervalInput, themeToggle, saveSettingsBtn, cancelSettingsBtn, settingsBtn;
 let refreshBtn, toast;
 
 // Initialize
@@ -35,7 +35,7 @@ function init() {
     addStockBtn = document.getElementById('addStockBtn');
 
     settingsModal = document.getElementById('settingsModal');
-    apiEndpointInput = document.getElementById('apiEndpoint');
+
     refreshIntervalInput = document.getElementById('refreshInterval');
     themeToggle = document.getElementById('themeToggle');
     saveSettingsBtn = document.getElementById('saveSettings');
@@ -86,7 +86,7 @@ function setupEventListeners() {
     // Settings Modal
     if (settingsBtn) {
         settingsBtn.addEventListener('click', () => {
-            apiEndpointInput.value = settings.apiEndpoint;
+
             refreshIntervalInput.value = settings.refreshInterval;
             themeToggle.checked = settings.theme === 'dark';
             settingsModal.classList.add('active');
@@ -509,7 +509,7 @@ function removeStock(code, broker) {
 window.removeStock = removeStock;
 
 function handleSaveSettings() {
-    settings.apiEndpoint = apiEndpointInput.value.trim();
+
     settings.refreshInterval = parseInt(refreshIntervalInput.value);
     settings.theme = themeToggle.checked ? 'dark' : 'light';
 
