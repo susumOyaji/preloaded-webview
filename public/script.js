@@ -185,7 +185,6 @@ async function fetchData() {
     }
 
     try {
-        const codesParam = allCodes.join(',');
         let baseUrl = settings.apiEndpoint;
 
         // Remove trailing slash if present
@@ -193,36 +192,61 @@ async function fetchData() {
             baseUrl = baseUrl.slice(0, -1);
         }
 
-        const url = `${baseUrl}/?code=${encodeURIComponent(codesParam)}`;
+        // Function to fetch a single code with retry
+        const fetchSingleCode = async (code) => {
+            const url = `${baseUrl}/?code=${encodeURIComponent(code)}`;
+            let retries = 3;
+            let attempt = 0;
 
-        // Retry logic
-        let response;
-        let retries = 3;
-        let attempt = 0;
+            while (attempt < retries) {
+                try {
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
 
-        while (attempt < retries) {
-            try {
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
+                    const response = await fetch(url, { signal: controller.signal });
+                    clearTimeout(timeoutId);
 
-                response = await fetch(url, { signal: controller.signal });
-                clearTimeout(timeoutId);
+                    if (response.ok) {
+                        return await response.json();
+                    }
 
-                if (response.ok) break; // Success, exit loop
+                    throw new Error(`Server returned ${response.status}`);
+                } catch (err) {
+                    attempt++;
+                    console.warn(`Fetch attempt ${attempt} for ${code} failed: ${err.message}`);
 
-                throw new Error(`Server returned ${response.status}`);
-            } catch (err) {
-                attempt++;
-                console.warn(`Fetch attempt ${attempt} failed: ${err.message}`);
+                    if (attempt >= retries) {
+                        console.error(`Final failure for ${code}: ${err.message}`);
+                        return null;
+                    }
 
-                if (attempt >= retries) throw err; // Final failure
+                    await new Promise(resolve => setTimeout(resolve, 1000 * Math.pow(2, attempt - 1)));
+                }
+            }
+        };
 
-                // Wait before retrying (exponential backoff: 1s, 2s, 4s)
-                await new Promise(resolve => setTimeout(resolve, 1000 * Math.pow(2, attempt - 1)));
+        // Fetch all codes with concurrency limit
+        const concurrencyLimit = 2;
+        const results = [];
+
+        for (let i = 0; i < allCodes.length; i += concurrencyLimit) {
+            const batch = allCodes.slice(i, i + concurrencyLimit);
+            const batchResults = await Promise.all(batch.map(code => fetchSingleCode(code)));
+            results.push(...batchResults);
+
+            if (i + concurrencyLimit < allCodes.length) {
+                await new Promise(resolve => setTimeout(resolve, 300));
             }
         }
 
-        const data = await response.json();
+        const data = results.filter(r => r !== null).flat();
+
+        // Check if there were any failures
+        const failedCount = results.filter(r => r === null).length;
+        if (failedCount > 0) {
+            showToast(`Failed to fetch ${failedCount} stock(s)`, 'error');
+        }
+
         console.log('API Response:', data);
 
         // Display JSON data
