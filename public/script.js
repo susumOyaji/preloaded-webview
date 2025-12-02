@@ -243,8 +243,17 @@ async function fetchData() {
 
         // Check if there were any failures
         const failedCount = results.filter(r => r === null).length;
+        const statusMessage = document.getElementById('statusMessage');
+
         if (failedCount > 0) {
-            showToast(`Failed to fetch ${failedCount} stock(s)`, 'error');
+            if (statusMessage) {
+                statusMessage.textContent = `Failed: ${failedCount}`;
+                statusMessage.style.display = 'block';
+            }
+        } else {
+            if (statusMessage) {
+                statusMessage.style.display = 'none';
+            }
         }
 
         console.log('API Response:', data);
